@@ -25,7 +25,7 @@ body {
 }
 
 .phone-screen {
-  background: #000000;
+  background: #0400ff;
   border-radius: 32px;
   overflow: hidden;
   display: flex;
@@ -69,7 +69,7 @@ body {
   position: relative;
   width: 100%;
   aspect-ratio: 4 / 5;
-  background-color: #000000;
+  background-color: #ff0000;
 }
 
 .post-media img.main-img {
@@ -161,7 +161,7 @@ body {
 }
 
 .likes strong {
-  color: #000000;
+  color: #0477fa;
 }
 
 /* Barra de Navegação Inferior */
