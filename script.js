@@ -1,9 +1,9 @@
 //Botao curtidas
-document.addEventListener("DOMContentLoaded", () =>{
+document.addEventListener("DOMContentLoaded", () {
     const likeBtn = document.querySelector(".left-actions .action-btn:first-child");
     if (!likeBtn) return;
     const likeSvg = likeBtn.querySelector("svg");
-
+}
 
     //localiza o contador
 
@@ -52,7 +52,7 @@ function addLike(){
     }
 }
 
-// Efeito visual de animação (bounce) no coração.
+// Efeito visual de animação (bounce) no coração.`{
 const svg = likeBtn.querySelector("svg");
 if (svg) {
 svg.style.transform = "scale(1.4)";
@@ -60,7 +60,7 @@ setTimeout(() => {
 svg.style.transform = "scale(1)";
 }, 150);
 }
-}
+
 
 // Evento de clique no BOTÃO DE CORAÇÃO (Curte ou Descurte)
 likeBtn.addEventListener("click", (e) => {
