@@ -110,7 +110,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid #ff0000;
+  border: 2px solid #000000;
 }
 
 /* Ações (Curtir, Comentar, Repostar, Direct, Salvar) */
@@ -153,7 +153,7 @@ body {
 .post-details {
   padding: 0 16px 12px 16px;
   font-size: 13px;
-  color: #fd0000;
+  color: #000000;
 }
 
 .likes {
