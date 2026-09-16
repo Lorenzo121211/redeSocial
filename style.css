@@ -224,4 +224,5 @@ body {
 /* Estados Ativos */
 .action-btn.liked { color: #e0245e; }
 .action-btn.saved { color: #f6ff00; }
-.action-btn.reposted { color: #0080ff; }
+.action-btn.reposted { color: #1dfa00; }
+.action-btn.shared { color: #0080ff;}
