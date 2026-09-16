@@ -1,108 +1,70 @@
-//Botao curtidas
-document.addEventListener("DOMContentLoaded", () {
-    const likeBtn = document.querySelector(".left-actions .action-btn:first-child");
-    if (!likeBtn) return;
-    const likeSvg = likeBtn.querySelector("svg");
+// Função genérica para aplicar e remover animações CSS
+function triggerAnimation(element, animationClass) {
+  element.classList.add(animationClass);
+  element.addEventListener('animationend', () => {
+    element.classList.remove(animationClass);
+  }, { once: true });
 }
 
-    //localiza o contador
+// 1. Curtir (Toggle de estado + incremento/decremento)
+const likeBtn = document.getElementById('likeBtn');
+let isLiked = false;
 
-    let textNode = Array.from(likeBtn.childNodes).find(node) => node.nodeType
-    === Node.TEXT_NODE && node.textContent.trim() !== ""
-);
+likeBtn.addEventListener('click', () => {
+  const countSpan = likeBtn.querySelector('.count');
+  let currentCount = parseInt(countSpan.textContent);
 
-//zera o contador
-let cont = 0;
+  isLiked = !isLiked;
+  likeBtn.classList.toggle('liked', isLiked);
+  countSpan.textContent = isLiked ? currentCount + 1 : currentCount - 1;
 
-//atualiza
-if(textNode){
-    textNode.textContent = `0`;
-}
+  triggerAnimation(likeBtn, 'animate-pop');
+});
 
-//coração
-function applyLikedStyle (){
-likeSvg.style.fill = "#ef4444";
-likeSvg.style.stroke = "#ef4444";
-likeSvg.style.color = "#ef4444";
+// 2. Repost (Toggle de estado + rotação)
+const repostBtn = document.getElementById('repostBtn');
+let isReposted = false;
 
+repostBtn.addEventListener('click', () => {
+  const countSpan = repostBtn.querySelector('.count');
+  let currentCount = parseInt(countSpan.textContent);
 
-//efeito curtida
-likeSvg.style.transform = "scale(1.3)";
-setTimeout(() => (likeSvg.style.transform = "scale(1)")150);
-}
+  isReposted = !isReposted;
+  repostBtn.classList.toggle('reposted', isReposted);
+  countSpan.textContent = isReposted ? currentCount + 1 : currentCount - 1;
 
-//para números acima de 1000
+  triggerAnimation(repostBtn, 'animate-spin');
+});
 
-function formatLikes(num){
-    if(num >=1000){
-        return (num/1000).toFixed(1)+"K";
+// 3. Salvar (Toggle de estado + animação)
+const saveBtn = document.getElementById('saveBtn');
+let isSaved = false;
+
+saveBtn.addEventListener('click', () => {
+  isSaved = !isSaved;
+  saveBtn.classList.toggle('saved', isSaved);
+
+  triggerAnimation(saveBtn, 'animate-pop');
+});
+
+// 4. Compartilhar (API de compartilhamento nativa ou Fallback para Copiar Link)
+const shareBtn = document.getElementById('shareBtn');
+
+shareBtn.addEventListener('click', async () => {
+  triggerAnimation(shareBtn, 'animate-bounce');
+
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: 'Confira este post!',
+        url: window.location.href
+      });
+    } catch (err) {
+      console.log('Compartilhamento cancelado');
     }
-    return num.toString();
-}
-
-//incrementar a curtida
-
-function addLike(){
-    baseLikes++;
-    isLiked = true;
-    likeBtn.classList.add("liked");
-
-    if(likesCountSpan){
-        likesCountSpan.textContent = formatLikes(baseLikes);
-    }
-}
-
-// Efeito visual de animação (bounce) no coração.`{
-const svg = likeBtn.querySelector("svg");
-if (svg) {
-svg.style.transform = "scale(1.4)";
-setTimeout(() => {
-svg.style.transform = "scale(1)";
-}, 150);
-}
-
-
-// Evento de clique no BOTÃO DE CORAÇÃO (Curte ou Descurte)
-likeBtn.addEventListener("click", (e) => {
-e.stopPropagation();
-
-if (isLiked) {
-// Se já estava curtido, descurte (-1)
-isLiked = false;
-baseLikes = Math.max(0, baseLikes - 1);
-likeBtn.classList.remove("liked");
-if (likesCountSpan) {
-likesCountSpan.textContent = formatLikes(baseLikes);
-}
-} else {
-// Se não estava curtido, adiciona curtida
-addLike();
-}
+  } else {
+    // Fallback: Copia o link para a área de transferência
+    navigator.clipboard.writeText(window.location.href);
+    alert('Link copiado para a área de transferência!');
+  }
 });
-
-// Evento de clique na IMAGEM PRINCIPAL (Sempre aumenta likes)
-if (postMedia) {
-postMedia.addEventListener("click", (e) => {
-e.stopPropagation();
-addLike();
-});
-}
-
-// Evento no botão de SALVAR (Bookmark)[cite: 1]
-if (bookmarkBtn) {
-let isBookmarked = false;
-bookmarkBtn.addEventListener("click", (e) => {
-e.stopPropagation();
-isBookmarked = !isBookmarked;
-bookmarkBtn.classList.toggle("bookmarked", isBookmarked);
-
-const svg = bookmarkBtn.querySelector("svg");
-if (svg) {
-svg.style.transform = "scale(1.2)";
-setTimeout(() => {
-svg.style.transform = "scale(1)";
-}, 150);
-}
-});
-}
-
